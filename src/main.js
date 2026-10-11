@@ -558,7 +558,7 @@ function initForm() {
       } else {
         // No backend configured: hand off to the visitor's email client.
         const body = `Name: ${data.name}\nPhone: ${data.phone}\nEmail: ${data.email}\nPractice area: ${data.practice_area}\n\n${data.message || ''}`;
-        window.location.href = `mailto:info@arminaklaw.com?subject=${encodeURIComponent(`Consultation request — ${data.practice_area}`)}&body=${encodeURIComponent(body)}`;
+        window.location.href = `mailto:info@arminaklaw.com?subject=${encodeURIComponent(`Consultation request: ${data.practice_area}`)}&body=${encodeURIComponent(body)}`;
       }
       form.classList.add('is-sent');
       status.textContent = endpoint
