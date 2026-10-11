@@ -39,11 +39,10 @@ public/               favicon, OG image, robots.txt, sitemap.xml, images/
 
 The live arminaklaw.com could not be reached while this was built. All copy comes from the project brief. Before launch:
 
-1. **Photography.** Tamar G. Arminak's headshot is in place (`public/images/team/tamar-arminak.webp` and `-sm.webp`). The hero still uses the
-   SVG skyline illustration, and the other team cards show monogram placeholders until their photos are added:
-   - `public/images/hero.jpg`: cinematic LA skyline, at least 2400px wide. It layers over the illustration with the same parallax.
-   - `public/images/team/<first>-<last>.jpg`, portrait 4:5: `nelly-ispiryan`, `pat-harris`, `anaeis-adjemian`, `helen-zardaryan`,
-     `arpi-gevorgyan`, `andre-kazarian`, `caroline-kazarian`, `mary-bejanyan`, `emily-bejanyan`.
+1. **Photography.** Portraits are in place for Tamar G. Arminak, Helen Zardaryan, Arpi N. Gevorgyan, Andre Kazarian, Caroline Kazarian
+   and Mary Bejanyan (`public/images/team/*.webp`, cropped to 4:5). Still needed; each card shows a monogram until its file exists:
+   - `public/images/team/<first>-<last>.jpg`, portrait 4:5: `nelly-ispiryan`, `pat-harris`, `anaeis-adjemian`, `emily-bejanyan`.
+   - `public/images/hero.jpg` (optional): cinematic LA skyline, at least 2400px wide, layered over the SVG illustration.
 2. **Press links.** The original article URLs could not be confirmed, so each press card in the `#media` section of `index.html` links to a web
    search for that story. Replace each `href` with the exact article URL from the current *In the News* page.
 3. **Logo.** `public/logo.svg` is a vector trace of the firm's swoosh mark in the site's gold. `public/favicon.svg` is the same mark on ink.
