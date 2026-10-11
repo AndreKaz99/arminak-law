@@ -231,7 +231,9 @@ function heroIntro() {
   const tl = gsap.timeline();
   if (reduceMotion) return tl;
   tl.to('.hero__line > span', { y: 0, duration: 1.4, stagger: 0.12, ease: 'expo.out' })
-    .from('.hero__mark', { opacity: 0, scale: 1.08, clipPath: 'inset(100% 0% 0% 0%)', duration: 2.6, ease: 'expo.inOut' }, 0)
+    // Reveal from the bottom; explicit start and end values, then the clip is removed entirely.
+    .fromTo('.hero__mark', { clipPath: 'inset(100% 0% 0% 0%)' }, { clipPath: 'inset(0% 0% 0% 0%)', duration: 2.6, ease: 'expo.inOut', clearProps: 'clipPath' }, 0)
+    .fromTo('.hero__mark svg', { opacity: 0, scale: 1.08 }, { opacity: 1, scale: 1, duration: 2.6, ease: 'expo.out', clearProps: 'opacity,scale' }, 0)
     .from('.hero__glow', { opacity: 0, duration: 2.2, ease: 'power2.out' }, 0)
     .to('[data-hero-fade]', { opacity: 1, y: 0, duration: 1.1, stagger: 0.12, ease: 'power3.out', startAt: { y: 24 } }, 0.35)
     .from('.nav__inner > *', { opacity: 0, y: -16, duration: 1, stagger: 0.08, ease: 'power3.out' }, 0.4);
