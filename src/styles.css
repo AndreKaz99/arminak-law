@@ -105,11 +105,11 @@ main > section, .footer { background: var(--bg); color: var(--fg); position: rel
 }
 .eyebrow::before { content: ''; width: 2.25rem; height: 1px; background: currentColor; opacity: 0.7; }
 
-.section-title, .attorney__name, .statement__text, .footer__big {
+.section-title, .attorney__name, .statement__text {
   font-family: var(--serif); font-weight: 300; letter-spacing: -0.015em; line-height: 1.02;
 }
 .section-title { font-size: clamp(2.5rem, 1.6rem + 4.2vw, 5.5rem); max-width: 16ch; margin-top: 1.5rem; }
-.section-title em, .attorney__name em, .statement__text em, .footer__big em, .hero__title em { color: var(--accent); font-weight: 300; }
+.section-title em, .attorney__name em, .statement__text em, .hero__title em { color: var(--accent); font-weight: 300; }
 .section-head { margin-bottom: clamp(3rem, 7vw, 6rem); }
 .section-head--split { display: grid; gap: 2rem; align-items: end; }
 @media (min-width: 900px) { .section-head--split { grid-template-columns: 1.4fr 1fr; } }
@@ -619,10 +619,8 @@ html:not(.js) .marquee, .reduced-motion .marquee { overflow-x: auto; -webkit-mas
 @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(198, 163, 108, 0.55); } 80%, 100% { box-shadow: 0 0 0 18px rgba(198, 163, 108, 0); } }
 
 /* ---------- Footer ---------- */
-.footer { padding-block: clamp(5rem, 10vw, 8rem) calc(2rem + env(safe-area-inset-bottom)); border-top: 1px solid var(--line); }
-.footer__top { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 2.5rem; padding-bottom: clamp(3rem, 6vw, 5rem); border-bottom: 1px solid var(--line); }
-.footer__big { font-size: clamp(2.6rem, 1.4rem + 5vw, 6.5rem); max-width: 12ch; }
-.footer__grid { display: grid; gap: 2.5rem; padding-block: 3.5rem; grid-template-columns: 1fr 1fr; }
+.footer { padding-block: clamp(2.5rem, 5vw, 4rem) calc(2rem + env(safe-area-inset-bottom)); border-top: 1px solid var(--line); }
+.footer__grid { display: grid; gap: 2.5rem; padding-block: 0.5rem 3.5rem; grid-template-columns: 1fr 1fr; }
 @media (min-width: 900px) { .footer__grid { grid-template-columns: 2fr 1fr 1.3fr 1fr; } }
 .footer__grid > div:first-child { grid-column: 1 / -1; }
 @media (min-width: 900px) { .footer__grid > div:first-child { grid-column: auto; } }
