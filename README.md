@@ -46,8 +46,7 @@ The live arminaklaw.com could not be reached while this was built. All copy come
    - Hero photo (optional): save a cinematic LA skyline (2400px+ wide) as `public/images/hero.jpg` and add
      `<img class="hero__photo" src="images/hero.jpg" alt="" fetchpriority="high" decoding="async" />` inside `.hero__media`, before
      `.hero__veil`. It picks up the same parallax and overlay.
-2. **Press links.** All press cards link to the original articles except *The Daily Beast* (Hollywood salon case), which still links
-   to a web search. Replace its `href` in the `#media` section of `index.html` once the article URL is known.
+2. **Press links.** All press cards link to the original articles.
 3. **Logo.** `public/logo.svg` is a vector trace of the firm's swoosh mark in the site's gold. `public/favicon.svg` is the same mark on ink.
    The page uses an inline `<symbol id="logo-mark">` so the gold can shift darker on light backgrounds.
 4. **Form backend.** With no endpoint set, the consultation form validates and then opens the visitor's email client with a pre-filled message

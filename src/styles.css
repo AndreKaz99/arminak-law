@@ -116,7 +116,7 @@ main > section, .footer { background: var(--bg); color: var(--fg); position: rel
 .section-intro { color: var(--muted); max-width: 38ch; justify-self: end; }
 
 /* Split-text mask lines */
-.split-line { padding-bottom: 0.08em; margin-bottom: -0.08em; }
+.split-line { padding-bottom: 0.18em; margin-bottom: -0.18em; }
 
 /* ---------- Links & buttons ---------- */
 .link-u { position: relative; display: inline-block; }
@@ -270,7 +270,7 @@ main > section, .footer { background: var(--bg); color: var(--fg); position: rel
   font-family: var(--serif); font-weight: 300; line-height: 0.92; letter-spacing: -0.025em;
   font-size: clamp(3.6rem, 1.5rem + 9.5vw, 10.5rem); margin: 1.5rem 0 clamp(2rem, 4vw, 3rem);
 }
-.hero__line { display: block; overflow: hidden; padding-bottom: 0.06em; }
+.hero__line { display: block; overflow: hidden; padding-bottom: 0.22em; margin-bottom: -0.16em; }
 .hero__line > span { display: inline-block; }
 .hero__line:nth-child(3) { padding-left: clamp(0rem, 8vw, 9rem); }
 .hero__line:nth-child(4) { padding-left: clamp(1.5rem, 16vw, 18rem); }
