@@ -304,19 +304,19 @@
         <h2 class="sr-only" id="stats-title">The firm at a glance</h2>
         <ul class="stats__grid" data-stagger>
           <li class="stat">
-            <p class="stat__num"><span data-count="20">20</span><sup>+</sup></p>
+            <p class="stat__num"><span class="sr-only">20+</span><span aria-hidden="true"><span data-count="20">20</span><sup>+</sup></span></p>
             <p class="stat__label">Years of experience &amp; results in California courtrooms</p>
           </li>
           <li class="stat">
-            <p class="stat__num"><sup>$</sup><span data-count="5.5" data-decimals="1">5.5</span><span class="stat__unit">M</span></p>
+            <p class="stat__num"><span class="sr-only">$5.5 million</span><span aria-hidden="true"><sup>$</sup><span data-count="5.5" data-decimals="1">5.5</span><span class="stat__unit">M</span></span></p>
             <p class="stat__label">Verdict against the City of Los Angeles in <em>Rangel v. City of L.A.</em>, 2025</p>
           </li>
           <li class="stat">
-            <p class="stat__num"><span data-count="12">12</span></p>
+            <p class="stat__num"><span class="sr-only">12</span><span aria-hidden="true"><span data-count="12">12</span></span></p>
             <p class="stat__label">Consecutive years named a Super Lawyers Rising Star (2009 to 2020)</p>
           </li>
           <li class="stat">
-            <p class="stat__num"><span data-count="3">3</span><span class="stat__unit">&nbsp;States</span></p>
+            <p class="stat__num"><span class="sr-only">3 states</span><span aria-hidden="true"><span data-count="3">3</span><span class="stat__unit">&nbsp;States</span></span></p>
             <p class="stat__label">Admitted in California, Nevada &amp; Arkansas, plus <i>pro hac vice</i> in Arizona &amp; Pennsylvania</p>
           </li>
         </ul>
@@ -466,7 +466,7 @@
 
         <article class="feature-case" data-reveal>
           <div class="feature-case__fig">
-            <p class="feature-case__amount"><sup>$</sup><span data-count="5500000" data-format="comma">5,500,000</span></p>
+            <p class="feature-case__amount"><span class="sr-only">$5,500,000</span><span aria-hidden="true"><sup>$</sup><span data-count="5500000" data-format="comma">5,500,000</span></span></p>
             <p class="feature-case__kicker">Verdict &amp; Judgment</p>
           </div>
           <div class="feature-case__body">
@@ -512,8 +512,9 @@
 
       <!-- Notable opponents -->
       <div class="opponents" aria-labelledby="opp-title">
-        <div class="container">
+        <div class="container marquee-head">
           <p class="eyebrow" id="opp-title" data-reveal>Notable Opponents</p>
+          <button class="motion-toggle" type="button" data-motion-toggle><span class="motion-toggle__icon" aria-hidden="true"></span><span class="motion-toggle__label">Pause motion</span></button>
         </div>
         <ul class="sr-only">
           <li>Bank of America</li><li>Kaiser Permanente</li><li>Pfizer</li><li>McKesson</li><li>City of Los Angeles</li>
@@ -568,7 +569,6 @@
           </p>
 
           <ol class="timeline" aria-label="Career timeline">
-            <li class="timeline__progress" aria-hidden="true"><span></span></li>
             <li class="tl">
               <span class="tl__when">Education</span>
               <h3 class="tl__what">Chapman University &middot; King's College London &middot; Loyola Law School</h3>
@@ -771,7 +771,10 @@
       </div>
 
       <div class="seen-on">
-        <div class="container"><p class="eyebrow" data-reveal>As seen on</p></div>
+        <div class="container marquee-head">
+          <p class="eyebrow" data-reveal>As seen on</p>
+          <button class="motion-toggle" type="button" data-motion-toggle><span class="motion-toggle__icon" aria-hidden="true"></span><span class="motion-toggle__label">Pause motion</span></button>
+        </div>
         <p class="sr-only">HBO, CNN, NBC, ABC, NewsNation, BBC and Harvard Law School.</p>
         <div class="marquee marquee--lg" data-marquee aria-hidden="true">
           <div class="marquee__track">
@@ -844,18 +847,18 @@
           <div class="field">
             <input id="f-name" name="name" type="text" autocomplete="name" required placeholder=" " />
             <label for="f-name">Full name</label>
-            <span class="field__err" id="f-name-err" role="alert"></span>
+            <span class="field__err" id="f-name-err"></span>
           </div>
           <div class="field-row">
             <div class="field">
               <input id="f-phone" name="phone" type="tel" autocomplete="tel" required placeholder=" " />
               <label for="f-phone">Phone</label>
-              <span class="field__err" id="f-phone-err" role="alert"></span>
+              <span class="field__err" id="f-phone-err"></span>
             </div>
             <div class="field">
               <input id="f-email" name="email" type="email" autocomplete="email" required placeholder=" " />
               <label for="f-email">Email</label>
-              <span class="field__err" id="f-email-err" role="alert"></span>
+              <span class="field__err" id="f-email-err"></span>
             </div>
           </div>
           <div class="field field--select">
@@ -870,11 +873,11 @@
               <option>Other</option>
             </select>
             <label for="f-area">Practice area</label>
-            <span class="field__err" id="f-area-err" role="alert"></span>
+            <span class="field__err" id="f-area-err"></span>
           </div>
           <div class="field">
             <textarea id="f-msg" name="message" rows="4" placeholder=" "></textarea>
-            <label for="f-msg">How can we help?</label>
+            <label for="f-msg">How can we help? (optional)</label>
           </div>
           <div class="form__foot">
             <p class="form__note" id="form-note">Submitting this form does not create an attorney client relationship. Please do not include confidential information.</p>
@@ -953,11 +956,11 @@
   </footer>
 
   <!-- Sticky mobile CTA -->
-  <div class="mobile-cta" aria-label="Quick contact">
+  <nav class="mobile-cta" aria-label="Quick contact">
     <a class="mobile-cta__call" href="tel:+18185842556" aria-label="Call (818) 584-2556">
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 005 5L15 13l5 2v4a2 2 0 01-2 2A16 16 0 013 6a2 2 0 012-2z"/></svg>
     </a>
     <a class="mobile-cta__main" href="#contact">Free Consultation</a>
-  </div>
+  </nav>
 </body>
 </html>

@@ -58,6 +58,31 @@ document.addEventListener('click', (e) => {
 });
 
 /* ------------------------------------------------------------------ */
+/* Keyboard focus: always bring the focused control into view          */
+/* ------------------------------------------------------------------ */
+// Smooth scrolling replaces the browser's own scroll-into-view, so keyboard focus could land off screen
+// or under the sticky header / phone bar (WCAG 2.4.7, 2.4.11). Jump to it instantly and finish its reveal.
+let pointerFocus = false;
+document.addEventListener('pointerdown', () => { pointerFocus = true; }, true);
+document.addEventListener('keydown', () => { pointerFocus = false; }, true);
+document.addEventListener('focusin', (e) => {
+  const el = e.target;
+  if (pointerFocus || !(el instanceof HTMLElement) || el.closest('.nav, #menu, .mobile-cta, .skip-link')) return;
+  // The pinned press rail positions itself for its own cards.
+  if (el.closest('.is-hscroll .press-track')) return;
+  const revealed = el.closest('[data-reveal], [data-stagger] > *, .tl');
+  if (revealed) gsap.set(revealed, { opacity: 1, y: 0, x: 0, overwrite: true });
+  const r = el.getBoundingClientRect();
+  const top = navH() + 16;
+  const cta = $('.mobile-cta');
+  const bottom = cta && cta.classList.contains('is-visible') && getComputedStyle(cta).display !== 'none'
+    ? cta.getBoundingClientRect().top - 16 : window.innerHeight - 16;
+  if (r.top >= top && r.bottom <= bottom) return;
+  const target = window.scrollY + r.top - top - Math.max(0, (bottom - top - r.height) / 3);
+  if (lenis) lenis.scrollTo(target, { immediate: true, force: true }); else window.scrollTo(0, target);
+});
+
+/* ------------------------------------------------------------------ */
 /* Page curtain: intro + transitions to other pages                    */
 /* ------------------------------------------------------------------ */
 const curtain = $('.curtain');
@@ -99,6 +124,10 @@ function onScrollNav() {
 window.addEventListener('scroll', onScrollNav, { passive: true });
 onScrollNav();
 
+function setBackgroundInert(on) {
+  $$('main, footer, .mobile-cta, .skip-link, .nav__links, .brand, .nav__actions > :not(.burger)').forEach((el) => { el.inert = on; });
+}
+
 function openMenu() {
   if (menuOpen) return;
   menuOpen = true;
@@ -110,6 +139,7 @@ function openMenu() {
   nav.classList.remove('is-light');
   lenis?.stop();
   document.body.style.overflow = 'hidden';
+  setBackgroundInert(true);
   const links = $$('.menu__list a span, .menu__list small', menu);
   if (reduceMotion) { gsap.set('.menu__bg', { clipPath: 'circle(150% at calc(100% - 3rem) 2.75rem)' }); }
   else {
@@ -127,6 +157,7 @@ function closeMenu(restoreFocus = true) {
   burger.setAttribute('aria-label', 'Open menu');
   nav.classList.remove('menu-open');
   document.body.style.overflow = '';
+  setBackgroundInert(false);
   lenis?.start();
   const done = () => { menu.hidden = true; updateNavTheme(); };
   if (reduceMotion) { gsap.set('.menu__bg', { clipPath: 'circle(0% at calc(100% - 3rem) 2.75rem)' }); done(); }
@@ -236,6 +267,8 @@ function initReveals() {
     SplitText.create(el, {
       type: 'lines',
       mask: 'lines',
+      aria: 'none',
+      tag: 'span',
       linesClass: 'split-line',
       autoSplit: true,
       onSplit(self) {
@@ -334,6 +367,22 @@ function initCounters() {
 /* ------------------------------------------------------------------ */
 /* Marquees (velocity-aware)                                           */
 /* ------------------------------------------------------------------ */
+/* Pause control for auto-moving content (WCAG 2.2.2). The choice is remembered per visitor. */
+const marqueeTweens = [];
+let motionPaused = false;
+try { motionPaused = localStorage.getItem('arminak-motion') === 'paused'; } catch {}
+function setMotionPaused(paused) {
+  motionPaused = paused;
+  root.classList.toggle('motion-paused', paused);
+  marqueeTweens.forEach((t) => (paused ? t.pause() : t.play()));
+  $$('[data-motion-toggle]').forEach((btn) => {
+    $('.motion-toggle__label', btn).textContent = paused ? 'Play motion' : 'Pause motion';
+  });
+  try { localStorage.setItem('arminak-motion', paused ? 'paused' : 'playing'); } catch {}
+}
+$$('[data-motion-toggle]').forEach((btn) => btn.addEventListener('click', () => setMotionPaused(!motionPaused)));
+if (motionPaused) setMotionPaused(true);
+
 function initMarquees() {
   if (reduceMotion) return;
   $$('[data-marquee]').forEach((m) => {
@@ -349,11 +398,13 @@ function initMarquees() {
     const width = track.offsetWidth;
     const speed = m.classList.contains('marquee--lg') ? 55 : 45; // px per second
     const tween = gsap.fromTo(inner, { x: dir < 0 ? 0 : -width }, { x: dir < 0 ? -width : 0, duration: width / speed, ease: 'none', repeat: -1 });
+    marqueeTweens.push(tween);
+    if (motionPaused) tween.pause();
     // Speed up with scroll velocity, ease back to cruise.
     let boost = 1;
     ScrollTrigger.create({
       trigger: m, start: 'top bottom', end: 'bottom top',
-      onToggle: (self) => (self.isActive ? tween.play() : tween.pause()),
+      onToggle: (self) => (self.isActive && !motionPaused ? tween.play() : tween.pause()),
       onUpdate: (self) => {
         boost = 1 + Math.min(Math.abs(self.getVelocity()) / 300, 5);
         gsap.to(tween, { timeScale: boost, duration: 0.2, overwrite: true, onComplete: () => gsap.to(tween, { timeScale: 1, duration: 1.2 }) });
@@ -405,12 +456,11 @@ function initAccordion() {
 function initTimeline() {
   const timeline = $('.timeline');
   if (!timeline) return;
-  const bar = $('.timeline__progress span', timeline);
   const items = $$('.tl', timeline);
   if (reduceMotion) { items.forEach((i) => i.classList.add('is-active')); return; }
-  gsap.fromTo(bar, { scaleY: 0 }, { scaleY: 1, ease: 'none', scrollTrigger: { trigger: timeline, start: 'top 70%', end: 'bottom 60%', scrub: 0.6 } });
+  gsap.fromTo(timeline, { '--p': 0 }, { '--p': 1, ease: 'none', scrollTrigger: { trigger: timeline, start: 'top 70%', end: 'bottom 60%', scrub: 0.6 } });
   items.forEach((item) => {
-    gsap.fromTo(item, { opacity: 0, x: 24 }, { opacity: 1, x: 0, duration: 1, ease: 'power3.out', scrollTrigger: { trigger: item, start: 'top 85%', once: true } });
+    gsap.fromTo(item, { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 1, ease: 'power3.out', scrollTrigger: { trigger: item, start: 'top 85%', once: true } });
     ScrollTrigger.create({ trigger: item, start: 'top 62%', onToggle: (self) => item.classList.toggle('is-active', self.isActive || self.progress === 1), end: 'max' });
   });
 }
@@ -542,6 +592,8 @@ function initForm() {
     const results = fields.map(validateField);
     const firstBad = fields[results.indexOf(false)];
     if (firstBad) {
+      const count = results.filter((ok) => !ok).length;
+      status.textContent = count === 1 ? 'Please correct the highlighted field.' : `Please correct the ${count} highlighted fields.`;
       firstBad.focus();
       if (!reduceMotion) gsap.fromTo(form, { x: -8 }, { x: 0, duration: 0.6, ease: 'elastic.out(1, 0.3)' });
       return;

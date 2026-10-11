@@ -59,11 +59,24 @@ The live arminaklaw.com could not be reached while this was built. All copy come
 
 - No em dashes, en dashes or hyphenated words in site copy (the phone number and proper names like Cedars-Sinai excepted).
 
-## Motion & accessibility notes
+## Accessibility (WCAG 2.2 AA)
 
-- With `prefers-reduced-motion: reduce`, Lenis, parallax, reveals, marquees, pinning and the intro curtain are all switched off, and everything is
-  visible immediately. The marquees become scrollable strips.
+The site is built and tested to WCAG 2.2 Level AA, the standard used for ADA web compliance. Verified with axe-core (zero
+violations on both pages, desktop and phone, with and without reduced motion) plus scripted manual checks:
+
+- **Keyboard:** every control is reachable in order with a visible focus ring. Because smooth scrolling replaces the
+  browser's scroll-into-view, a `focusin` handler in `src/main.js` jumps the page so the focused control is never off screen,
+  still fading in, or hidden under the sticky header or phone contact bar (2.4.7, 2.4.11).
+- **Motion:** the scrolling strips have a **Pause motion** button that pauses all automatic movement site-wide and is remembered
+  per visitor (2.2.2). Other decorative loops stop within five seconds. `prefers-reduced-motion` turns off smooth scrolling,
+  parallax, reveals, pinning and the intro.
+- **Screen readers:** headline line splitting keeps the real text exposed; animated counters announce their final values;
+  the mobile menu is a focus-trapped dialog with the rest of the page made `inert`; links that open a new tab say so.
+- **Forms:** persistent labels, optional field marked, errors tied to each field with `aria-invalid`/`aria-describedby`, and
+  a single polite status summary. Field underlines meet 3:1 non-text contrast (1.4.11).
+- **Reflow and text spacing:** no horizontal scrolling at 320px or at 200% zoom, including with WCAG text-spacing
+  overrides applied (1.4.10, 1.4.12).
 - If the JS bundle fails to load, an inline guard removes the hidden start states after 4s so content is never stuck invisible.
-- Colors meet WCAG AA contrast. The bronze accent is darkened on light sections (`#7d5f34`, 5.2:1).
-- Keyboard: skip link, visible focus rings, focus-trapped mobile menu (Esc closes it), and accordion buttons with `aria-expanded`.
-  Focusing a press card scrolls the pinned rail to it.
+
+Automated and scripted testing cannot cover everything; a periodic check with a real screen reader (VoiceOver, NVDA) is
+recommended, and the statement at `accessibility.html` gives visitors a way to report barriers.
