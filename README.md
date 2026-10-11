@@ -18,7 +18,11 @@ npm run build     # outputs static files to dist/
 npm run preview   # serve the production build
 ```
 
-Deploy `dist/` to any static host (Netlify, Vercel, Cloudflare Pages, S3, etc.).
+Deploy `dist/` to any static host (Netlify, Vercel, Cloudflare Pages, S3, etc.). The build uses relative paths, so it works at a domain
+root or under a sub-path.
+
+**Preview:** `.github/workflows/pages.yml` builds and deploys to GitHub Pages on every push to `claude/vibrant-ride-crkb8q`:
+https://andrekaz99.github.io/arminak-law/
 
 ## Structure
 
