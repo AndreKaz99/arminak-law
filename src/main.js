@@ -25,6 +25,11 @@ if (reduceMotion) root.classList.add('reduced-motion');
 /* ------------------------------------------------------------------ */
 /* Smooth scrolling                                                    */
 /* ------------------------------------------------------------------ */
+const isReload = performance.getEntriesByType?.('navigation')?.[0]?.type === 'reload';
+if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+if (isReload && location.hash) history.replaceState(null, '', location.pathname + location.search);
+window.scrollTo(0, 0);
+
 let lenis = null;
 if (!reduceMotion) {
   lenis = new Lenis({ duration: 1.15, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), smoothWheel: true });
@@ -58,7 +63,6 @@ document.addEventListener('click', (e) => {
   // Move focus for keyboard / screen-reader users without a second jump.
   if (!target.hasAttribute('tabindex')) target.setAttribute('tabindex', '-1');
   target.focus({ preventScroll: true });
-  history.replaceState(null, '', id === 'main' || id === 'top' ? location.pathname : `#${id}`);
 });
 
 /* ------------------------------------------------------------------ */
@@ -656,8 +660,8 @@ document.fonts.ready.then(() => {
   master.add(introCurtain()).add(heroIntro(), '-=0.75');
   ScrollTrigger.refresh();
 
-  // Honour a deep link once layout settles.
-  if (location.hash.length > 1) {
+  // Honour a shared deep link (e.g. /#contact) once layout settles; a refresh always starts at the top.
+  if (location.hash.length > 1 && !isReload) {
     const target = document.getElementById(location.hash.slice(1));
     if (target) setTimeout(() => scrollToTarget(target), 400);
   }
