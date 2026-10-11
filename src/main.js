@@ -231,31 +231,28 @@ function heroIntro() {
   const tl = gsap.timeline();
   if (reduceMotion) return tl;
   tl.to('.hero__line > span', { y: 0, duration: 1.4, stagger: 0.12, ease: 'expo.out' })
-    .fromTo('.hero__svg', { scale: 1.12 }, { scale: 1, duration: 2.4, ease: 'expo.out' }, 0)
+    .from('.hero__mark', { opacity: 0, scale: 1.08, clipPath: 'inset(100% 0% 0% 0%)', duration: 2.6, ease: 'expo.inOut' }, 0)
+    .from('.hero__glow', { opacity: 0, duration: 2.2, ease: 'power2.out' }, 0)
     .to('[data-hero-fade]', { opacity: 1, y: 0, duration: 1.1, stagger: 0.12, ease: 'power3.out', startAt: { y: 24 } }, 0.35)
     .from('.nav__inner > *', { opacity: 0, y: -16, duration: 1, stagger: 0.08, ease: 'power3.out' }, 0.4);
   return tl;
 }
 
 if (!reduceMotion) {
-  // Layered parallax: each SVG layer drifts at its own depth.
-  $$('.hero__svg .layer').forEach((layer) => {
-    const depth = parseFloat(layer.dataset.depth || 0);
-    gsap.to(layer, {
-      y: () => -depth * window.innerHeight * 0.55,
-      ease: 'none',
-      scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true, invalidateOnRefresh: true },
-    });
-  });
+  // The mark drifts and turns slightly as the page scrolls away.
+  gsap.to('.hero__mark', { yPercent: -14, rotate: -4, ease: 'none', scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true } });
   if ($('.hero__photo')) gsap.to('.hero__photo', { yPercent: 12, ease: 'none', scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true } });
   gsap.to('.hero__content', { yPercent: -18, opacity: 0.2, ease: 'none', scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true } });
 
-  // Subtle pointer drift on the skyline.
+  // Subtle pointer drift on the mark and its light.
   if (finePointer) {
-    const layers = $$('.hero__svg .layer').map((el) => ({ el, depth: parseFloat(el.dataset.depth || 0), x: gsap.quickTo(el, 'x', { duration: 1.4, ease: 'power3.out' }) }));
+    const mx = gsap.quickTo('.hero__mark', 'x', { duration: 1.6, ease: 'power3.out' });
+    const my = gsap.quickTo('.hero__mark', 'y', { duration: 1.6, ease: 'power3.out' });
+    const gx = gsap.quickTo('.hero__glow', 'x', { duration: 2, ease: 'power3.out' });
     $('.hero').addEventListener('pointermove', (e) => {
       const nx = e.clientX / window.innerWidth - 0.5;
-      layers.forEach((l) => l.x(-nx * l.depth * 80));
+      const ny = e.clientY / window.innerHeight - 0.5;
+      mx(-nx * 28); my(-ny * 20); gx(nx * 40);
     });
   }
 }
