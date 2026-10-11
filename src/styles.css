@@ -252,16 +252,16 @@ main > section, .footer { background: var(--bg); color: var(--fg); position: rel
 .hero__glow {
   position: absolute; inset: 0;
   background:
-    radial-gradient(60% 70% at 80% 42%, rgba(198, 163, 108, 0.16) 0%, rgba(198, 163, 108, 0.05) 45%, transparent 70%),
+    radial-gradient(65% 80% at 78% 40%, rgba(198, 163, 108, 0.2) 0%, rgba(198, 163, 108, 0.06) 45%, transparent 72%),
     radial-gradient(90% 60% at 10% 110%, rgba(198, 163, 108, 0.06), transparent 60%),
     linear-gradient(180deg, #0b0c0e 0%, #121316 55%, #0e0f11 100%);
 }
 .hero__mark {
-  position: absolute; top: 50%; right: -22vw; width: min(118vh, 92vw); height: min(118vh, 92vw); max-width: none;
-  transform: translateY(-48%); opacity: 0.22; will-change: transform;
-  -webkit-mask-image: radial-gradient(closest-side, #000 62%, transparent 100%); mask-image: radial-gradient(closest-side, #000 62%, transparent 100%);
+  position: absolute; top: 44%; left: 47%; width: min(165vh, 112vw); height: min(165vh, 112vw); max-width: none;
+  transform: translateY(-50%); opacity: 0.34; will-change: transform;
+  -webkit-mask-image: radial-gradient(closest-side, #000 70%, transparent 100%); mask-image: radial-gradient(closest-side, #000 70%, transparent 100%);
 }
-@media (max-width: 899px) { .hero__mark { right: -38vw; width: 135vw; height: 135vw; top: 34%; opacity: 0.16; } }
+@media (max-width: 899px) { .hero__mark { left: 10vw; width: 170vw; height: 170vw; top: 38%; opacity: 0.26; } }
 .hero__grain {
   position: absolute; inset: 0; opacity: 0.35; mix-blend-mode: overlay; pointer-events: none;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
