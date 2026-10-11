@@ -36,6 +36,10 @@ if (!reduceMotion) {
 const navH = () => ($('.nav')?.offsetHeight || 64);
 function scrollToTarget(target) {
   if (!target) return;
+  if (target.id === 'top') {
+    if (lenis) lenis.scrollTo(0, { duration: 1.4 }); else window.scrollTo({ top: 0, behavior: reduceMotion ? 'auto' : 'smooth' });
+    return;
+  }
   const offset = target.id === 'main' ? 0 : -navH() + 1;
   if (lenis) lenis.scrollTo(target, { offset, duration: 1.4 });
   else window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY + offset, behavior: reduceMotion ? 'auto' : 'smooth' });
@@ -54,7 +58,7 @@ document.addEventListener('click', (e) => {
   // Move focus for keyboard / screen-reader users without a second jump.
   if (!target.hasAttribute('tabindex')) target.setAttribute('tabindex', '-1');
   target.focus({ preventScroll: true });
-  history.replaceState(null, '', id === 'main' ? location.pathname : `#${id}`);
+  history.replaceState(null, '', id === 'main' || id === 'top' ? location.pathname : `#${id}`);
 });
 
 /* ------------------------------------------------------------------ */

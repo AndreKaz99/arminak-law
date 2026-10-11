@@ -281,7 +281,7 @@ main > section, .footer { background: var(--bg); color: var(--fg); position: rel
 .hero__ctas { display: flex; flex-wrap: wrap; gap: 0.9rem; }
 .hero__scroll {
   position: absolute; right: var(--gutter); bottom: 2rem; display: none; align-items: center; gap: 1rem;
-  font-size: 0.68rem; letter-spacing: 0.3em; text-transform: uppercase; color: rgba(244, 240, 232, 0.7);
+  font-size: 0.72rem; letter-spacing: 0.3em; text-transform: uppercase; color: rgba(244, 240, 232, 0.7);
   writing-mode: vertical-rl;
 }
 .hero__scroll i { position: relative; width: 1px; height: 4rem; background: rgba(244, 240, 232, 0.2); overflow: hidden; }
@@ -380,7 +380,7 @@ main > section, .footer { background: var(--bg); color: var(--fg); position: rel
 .case::before { content: ''; position: absolute; top: -1px; left: 0; height: 1px; width: 100%; background: var(--accent); transform: scaleX(0); transform-origin: left; transition: transform 0.8s var(--ease); }
 .case:hover::before { transform: scaleX(1); }
 @media (hover: hover) { .case:hover { background: rgba(244, 240, 232, 0.03); } }
-.case__tag { font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); font-weight: 600; }
+.case__tag { font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); font-weight: 600; }
 .case__title { font-family: var(--serif); font-weight: 400; font-size: clamp(1.45rem, 1.2rem + 0.7vw, 1.9rem); line-height: 1.15; }
 .case p { color: var(--muted); font-size: 0.95rem; }
 .case--cta { justify-content: space-between; }
@@ -453,7 +453,7 @@ html:not(.js) .marquee, .reduced-motion .marquee { overflow-x: auto; -webkit-mas
 @media (hover: hover) { .award:hover { background: var(--surface); } }
 .award__icon svg { width: 2.25rem; height: 2.25rem; fill: none; stroke: var(--accent); stroke-width: 1.2; stroke-linejoin: round; stroke-linecap: round; margin-bottom: 1.25rem; transition: transform 0.8s var(--ease); }
 .award:hover .award__icon svg { transform: rotate(-8deg) scale(1.08); }
-.award__title { font-family: var(--serif); font-size: 1.5rem; line-height: 1.1; }
+.award__title { font-family: var(--serif); font-size: 1.5rem; font-weight: 400; line-height: 1.1; }
 .award__sub { font-size: 0.85rem; color: var(--muted); }
 
 /* ---------- Team ---------- */
@@ -483,7 +483,7 @@ html:not(.js) .marquee, .reduced-motion .marquee { overflow-x: auto; -webkit-mas
 .media { padding-top: clamp(6rem, 12vw, 10rem); }
 .media__pin { overflow: hidden; }
 .media__head { display: flex; justify-content: space-between; align-items: end; gap: 2rem; margin-bottom: clamp(2.5rem, 5vw, 4rem); }
-.media__hint { display: none; align-items: center; gap: 1rem; font-size: 0.68rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--muted); }
+.media__hint { display: none; align-items: center; gap: 1rem; font-size: 0.72rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--muted); }
 .media__hint i { width: 4rem; height: 1px; background: var(--line); position: relative; overflow: hidden; }
 .media__hint i::after { content: ''; position: absolute; inset: 0; background: var(--accent); animation: hint 2.4s var(--ease-in-out) 2; }
 @keyframes hint { 0% { transform: translateX(-100%); } 60%, 100% { transform: translateX(100%); } }
@@ -659,7 +659,7 @@ html:not(.js) .marquee, .reduced-motion .marquee { overflow-x: auto; -webkit-mas
 .marquee-head { display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; }
 .motion-toggle {
   display: none; align-items: center; gap: 0.7rem; min-height: 2.75rem; padding: 0 0.25rem;
-  font-size: 0.68rem; font-weight: 600; letter-spacing: 0.24em; text-transform: uppercase; color: var(--muted);
+  font-size: 0.72rem; font-weight: 600; letter-spacing: 0.24em; text-transform: uppercase; color: var(--muted);
   transition: color 0.4s;
 }
 .js .motion-toggle { display: inline-flex; }
