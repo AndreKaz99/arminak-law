@@ -39,10 +39,10 @@ public/               favicon, OG image, robots.txt, sitemap.xml, images/
 
 The live arminaklaw.com could not be reached while this was built. All copy comes from the project brief. Before launch:
 
-1. **Photography.** Portraits are in place for Tamar G. Arminak, Helen Zardaryan, Arpi N. Gevorgyan, Andre Kazarian, Caroline Kazarian
-   and Mary Bejanyan (`public/images/team/*.webp`, cropped to 4:5). Cards without a photo show the person's initials:
-   Nelly Ispiryan, Pat Harris, Anaeis Adjemian and Emily Bejanyan. To add one, save a 4:5 portrait to `public/images/team/` and add an
-   `<img src="images/team/<file>" width="560" height="700" alt="" loading="lazy" decoding="async" />` after that card's `member__mono` span.
+1. **Photography.** Portraits are in place for every team member except Emily Bejanyan, whose card shows her initials
+   (`public/images/team/*.webp`, cropped to 4:5). To add hers, save a 4:5 portrait to `public/images/team/` and add
+   `<img src="images/team/<file>" width="560" height="700" alt="" loading="lazy" decoding="async" />` after her card's `member__mono` span.
+   - Pat Harris's source photo is small (417x448), so his crop is upscaled; a higher resolution headshot would look sharper.
    - Hero photo (optional): save a cinematic LA skyline (2400px+ wide) as `public/images/hero.jpg` and add
      `<img class="hero__photo" src="images/hero.jpg" alt="" fetchpriority="high" decoding="async" />` inside `.hero__media`, before
      `.hero__veil`. It picks up the same parallax and overlay.
