@@ -47,6 +47,10 @@ The live arminaklaw.com could not be reached while this was built. All copy come
      `<img class="hero__photo" src="images/hero.jpg" alt="" fetchpriority="high" decoding="async" />` inside `.hero__media`, before
      `.hero__veil`. It picks up the same parallax and overlay.
 2. **Press links.** All press cards link to the original articles.
+2b. **On Air gallery.** Television stills live in `public/images/media/` as `<name>.webp` (full size, used by the viewer) and
+   `<name>-sm.webp` (760px, used in the grid). Captions come from the on-screen graphics; the "Case Closed!" interview is captioned
+   generically ("Television interview") because the programme name isn't visible, so confirm it before launch. To add a photo, copy
+   any `<li class="onair__item">` in the `.onair` block of `index.html`; the grid fills in threes after the lead row.
 3. **Logo.** `public/logo.svg` is a vector trace of the firm's swoosh mark in the site's gold. `public/favicon.svg` is the same mark on ink.
    The page uses an inline `<symbol id="logo-mark">` so the gold can shift darker on light backgrounds.
 4. **Form backend.** With no endpoint set, the consultation form validates and then opens the visitor's email client with a pre-filled message

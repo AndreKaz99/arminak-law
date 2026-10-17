@@ -75,7 +75,7 @@ document.addEventListener('pointerdown', () => { pointerFocus = true; }, true);
 document.addEventListener('keydown', () => { pointerFocus = false; }, true);
 document.addEventListener('focusin', (e) => {
   const el = e.target;
-  if (pointerFocus || !(el instanceof HTMLElement) || el.closest('.nav, #menu, .mobile-cta, .skip-link')) return;
+  if (pointerFocus || !(el instanceof HTMLElement) || el.closest('.nav, #menu, .mobile-cta, .skip-link, .lightbox')) return;
   // The pinned press rail positions itself for its own cards.
   if (el.closest('.is-hscroll .press-track')) return;
   const revealed = el.closest('[data-reveal], [data-stagger] > *, .tl');
@@ -633,11 +633,57 @@ function initForm() {
 }
 
 /* ------------------------------------------------------------------ */
+/* On Air gallery: full-size viewer                                    */
+/* ------------------------------------------------------------------ */
+function initOnAir() {
+  const dialog = $('.lightbox');
+  const buttons = $$('.onair__open');
+  if (!dialog || !buttons.length || typeof dialog.showModal !== 'function') return;
+  const img = $('.lightbox__img', dialog);
+  const outlet = $('.lightbox__caption .onair__outlet', dialog);
+  const topic = $('.lightbox__caption .onair__topic', dialog);
+  let index = 0;
+  let opener = null;
+
+  const show = (i) => {
+    index = (i + buttons.length) % buttons.length;
+    const btn = buttons[index];
+    const thumb = $('img', btn);
+    const fig = btn.closest('figure');
+    img.src = btn.dataset.full;
+    img.alt = thumb.alt;
+    outlet.innerHTML = $('.onair__outlet', fig).innerHTML;
+    topic.textContent = $('.onair__topic', fig).textContent;
+    if (!reduceMotion) gsap.fromTo(img, { opacity: 0, scale: 0.98 }, { opacity: 1, scale: 1, duration: 0.5, ease: 'power3.out' });
+  };
+  const close = () => dialog.close();
+
+  buttons.forEach((btn, i) => btn.addEventListener('click', () => {
+    opener = btn;
+    show(i);
+    dialog.showModal();
+    lenis?.stop();
+    $('.lightbox__close', dialog).focus();
+  }));
+  $('.lightbox__prev', dialog).addEventListener('click', () => show(index - 1));
+  $('.lightbox__next', dialog).addEventListener('click', () => show(index + 1));
+  $('.lightbox__close', dialog).addEventListener('click', close);
+  // Clicking the dimmed backdrop (outside the photo and controls) closes the viewer.
+  dialog.addEventListener('click', (e) => { if (e.target === dialog || e.target.classList.contains('lightbox__figure')) close(); });
+  dialog.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowLeft') { e.preventDefault(); show(index - 1); }
+    if (e.key === 'ArrowRight') { e.preventDefault(); show(index + 1); }
+  });
+  dialog.addEventListener('close', () => { lenis?.start(); opener?.focus({ preventScroll: true }); });
+}
+
+/* ------------------------------------------------------------------ */
 /* Boot                                                                */
 /* ------------------------------------------------------------------ */
 $$('[data-year]').forEach((el) => { el.textContent = new Date().getFullYear(); });
 
 initAccordion();
+initOnAir();
 initForm();
 initMobileCta();
 initMagnetic();
